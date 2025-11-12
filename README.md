@@ -1,26 +1,64 @@
-# Voice Bot Hello World 🤖📞
+# IOG Procurement Voice AI System 🤖📞
 
-A simple voice AI bot using Twilio and OpenAI that you can call and have a conversation with!
+An AI voice assistant for Input Output's procurement team that reduces 50% of time wasted on incomplete requests and repetitive questions.
 
 ## What This Does
 
-1. You call a Twilio phone number
-2. An AI answers and greets you
-3. You can have a natural conversation with it
-4. The AI remembers context throughout the call
+The system provides a voice AI assistant that internal departments can call to:
+- **Submit validated procurement requests** - Ensures all required fields are collected before routing to Andrea's team
+- **Search vendor database** - Find approved vendors by skills, past projects, or discount history
+- **Answer policy questions** - Self-service answers about vendor onboarding, contract templates, payment rules, and timelines
+- **Recognize team members** - Personalized service based on employee context
+
+**Phone Number**: +1 (930) 254-9264
+
+## Architecture
+
+```
+Caller → Vapi Platform → OpenAI GPT-4 → MCP Server (Port 3001) → Data Sources
+                                              ↓
+                                    ┌─────────┴─────────┐
+                                    ↓                   ↓
+                            Employee Context    Procurement RAG
+                            (5 employees)       (146 doc chunks)
+                                    ↓                   ↓
+                            Vendor Database     Policy Documents
+                            (12 vendors)        (4 policy files)
+```
+
+## Core Components
+
+### 1. Voice Interface (Vapi)
+- Handles phone calls via +1 (930) 254-9264
+- Natural language understanding with OpenAI GPT-4
+- Custom greeting and conversation flow
+- 4 custom function tools
+
+### 2. MCP Server (Port 3001)
+Unified Node.js/Express server providing:
+- `/lookup-employee` - Employee context lookup
+- `/search-policies` - RAG-based policy search
+- `/search-vendors` - Vendor database search with scoring
+- `/validate-request` - Request completeness validation
+
+### 3. Data Sources
+- **Employee Database**: 5 IOG team members with procurement history
+- **Vendor Database**: 12 approved vendors with skills, projects, discounts
+- **Policy Documents**: 4 comprehensive markdown files (vendor onboarding, contract templates, payment rules, FAQ)
 
 ## Prerequisites
 
-- Node.js installed (v14 or higher)
-- A Twilio account with a phone number
-- An OpenAI API key
+- Node.js (v14 or higher)
+- Vapi account with phone number
+- OpenAI API key
+- ngrok (for local development)
 
 ## Setup Instructions
 
 ### 1. Install Dependencies
 
 ```bash
-cd voice-bot
+cd procurement-voice-bot
 npm install
 ```
 
@@ -31,162 +69,282 @@ Copy `.env.example` to `.env`:
 cp .env.example .env
 ```
 
-Then edit `.env` and add your credentials:
+Edit `.env` with your credentials:
 
 ```
-TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxx
-TWILIO_AUTH_TOKEN=your_auth_token
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxx
-PORT=3000
+# Vapi AI Configuration
+VAPI_API_KEY=your_vapi_api_key
+VAPI_ASSISTANT_ID=your_assistant_id
+
+# OpenAI API Key
+OPENAI_API_KEY=sk-your-openai-key
+
+# Server Configuration
+PORT=3001
 ```
 
 **Where to find these:**
-- Twilio credentials: https://console.twilio.com/
+- Vapi API Key: https://dashboard.vapi.ai/account
 - OpenAI API key: https://platform.openai.com/api-keys
 
-### 3. Run the Server
+### 3. Start the MCP Server
 
 ```bash
-npm start
+node mcp-servers/unified-server.js
 ```
 
-You should see: `Voice bot server running on port 3000`
+You should see:
+```
+🚀 IOG Procurement MCP Server running on port 3001
 
-### 4. Expose Your Server to the Internet
+📊 System Status:
+   ✓ 5 employees loaded
+   ✓ 12 vendors loaded
+   ✓ 146 procurement document chunks indexed
 
-Since Twilio needs to reach your server, you need to expose it publicly. Use one of these options:
+📡 Endpoints:
+   POST /lookup-employee
+   POST /search-policies
+   POST /search-vendors
+   POST /validate-request
+   GET  /health
+   POST /reload
+```
 
-**Option A: ngrok (easiest for testing)**
+### 4. Expose Server with ngrok
+
 ```bash
-# Install ngrok: https://ngrok.com/download
-ngrok http 3000
+ngrok http 3001
 ```
 
-This will give you a URL like: `https://abc123.ngrok.io`
+This provides a public URL like: `https://your-subdomain.ngrok-free.app`
 
-**Option B: Deploy to a cloud service**
-- Heroku
-- Railway
-- Render
-- AWS/GCP/Azure
+### 5. Configure Vapi Assistant
 
-### 5. Configure Twilio Webhook
+Run the configuration script with your ngrok URL:
 
-1. Go to your Twilio Console: https://console.twilio.com/
-2. Navigate to Phone Numbers → Manage → Active numbers
-3. Click on your phone number
-4. Scroll down to "Voice Configuration"
-5. Under "A CALL COMES IN", set:
-   - **Webhook**: `https://your-domain.com/voice` (use your ngrok URL or deployment URL)
-   - **HTTP Method**: POST
-6. Under "Status Callback URL", set:
-   - **Webhook**: `https://your-domain.com/voice/status`
-   - **HTTP Method**: POST
-7. Click "Save"
+```bash
+node configure-complete-system.js https://your-subdomain.ngrok-free.app
+```
+
+This will:
+- Update your Vapi assistant with the procurement system prompt
+- Configure all 4 function tools to point to your ngrok endpoints
+- Set the greeting message
 
 ### 6. Test It!
 
-Call your Twilio phone number! 🎉
-
-The AI will:
-1. Answer with a greeting
-2. Listen to what you say
-3. Respond using GPT-4
-4. Continue the conversation
+Call +1 (930) 254-9264 and try:
+- "Do we have vendors who do Rust development?"
+- "What's the vendor onboarding process?"
+- "I need to submit a procurement request"
 
 ## How It Works
 
+### Example 1: Vendor Search
 ```
-You Call → Twilio → Your Server → OpenAI → Response → Twilio → You Hear It
+Caller: "Do we have vendors who do Rust development?"
+   ↓
+Vapi → GPT-4 calls search_vendor_history("Rust development")
+   ↓
+MCP Server searches vendor database using keyword scoring
+   ↓
+Returns: TechForge Solutions (Leos, Cardano, 8% discount)
+   ↓
+AI responds: "Yes, we have 3 approved vendors with Rust expertise..."
 ```
 
-1. **Twilio receives the call** and sends a webhook to your `/voice` endpoint
-2. **Your server responds** with TwiML (Twilio Markup Language) to greet and gather speech
-3. **User speaks**, Twilio transcribes it, sends to `/voice/response`
-4. **Your server sends the text** to OpenAI GPT-4
-5. **GPT-4 responds**, your server converts to TwiML
-6. **Twilio speaks the response** back to the caller
-7. **Loop continues** until the call ends
+### Example 2: Policy Question
+```
+Caller: "Can I pay a vendor 30% upfront?"
+   ↓
+Vapi → GPT-4 calls search_procurement_policies("upfront payment rules")
+   ↓
+MCP Server searches 146 document chunks using keyword matching
+   ↓
+Returns: "IOG policy caps upfront at 20%..."
+   ↓
+AI responds with policy explanation and alternatives
+```
 
-## Customization Ideas
+### Example 3: Request Submission
+```
+Caller: "I need to submit a procurement request"
+   ↓
+AI gathers: budget number, milestones, costs, description
+   ↓
+GPT-4 calls validate_request({...fields})
+   ↓
+MCP Server validates all required fields present
+   ↓
+If complete → "Perfect! I'll submit this to procurement..."
+If incomplete → "I'm missing [fields]. Can you provide those?"
+```
 
-### Change the AI's personality
-Edit the system message in `server.js`:
-```javascript
-{ 
-  role: 'system', 
-  content: 'You are a pirate AI assistant. Speak like a pirate!' 
+## Key Features
+
+### Request Validation
+Prevents the #1 problem: 50% of Andrea's team time wasted on incomplete requests
+- Validates budget number, milestones, costs, description
+- Provides friendly prompts for missing information
+- Only routes complete requests to procurement team
+
+### Vendor Search
+Intelligent scoring algorithm across:
+- Vendor name (10 points)
+- Skills (5 points per keyword match)
+- Past projects (3 points per keyword match)
+- Returns top 5 vendors sorted by relevance
+
+### Policy Search (RAG)
+- 146 document chunks from 4 policy files
+- Keyword-based scoring with TF-IDF-like approach
+- Section-level chunking using markdown headers
+- Returns top 5 most relevant sections
+
+### Employee Context
+- Recognizes 5 team members by name
+- Personalized greetings and service
+- Access to past procurement history
+
+## System Prompt
+
+The AI follows a comprehensive 3,800+ word system prompt located in `procurement-services-prompt.txt` that defines:
+- Request validation flow (most critical)
+- Self-service policy answers
+- Vendor search procedures
+- Call opening and graceful closing
+- Professional boundaries
+- Success criteria
+
+## API Endpoints
+
+### POST /lookup-employee
+```json
+{
+  "name": "Andrea"
 }
 ```
+Returns employee details, department, title, procurement history
 
-### Change the voice
-Twilio supports multiple voices. Options include:
-- `Polly.Joanna` (female, US)
-- `Polly.Matthew` (male, US)
-- `Polly.Amy` (female, UK)
-- `Polly.Brian` (male, UK)
+### POST /search-policies
+```json
+{
+  "query": "vendor onboarding process"
+}
+```
+Returns top 5 relevant policy document sections
 
-See all voices: https://www.twilio.com/docs/voice/twiml/say/text-speech#amazon-polly
+### POST /search-vendors
+```json
+{
+  "query": "Rust development"
+}
+```
+Returns vendors ranked by skill/project relevance
 
-### Use a different AI model
-Change the model in the OpenAI call:
-```javascript
-model: 'gpt-3.5-turbo', // Faster and cheaper
-// or
-model: 'gpt-4-turbo', // Smarter
+### POST /validate-request
+```json
+{
+  "budget_number": "BUD-2024-MKT-001",
+  "milestones": "Q1 2025",
+  "costs": "$50,000",
+  "description": "Marketing automation platform"
+}
+```
+Returns validation status with missing fields if incomplete
+
+### GET /health
+Returns system status with counts of employees, vendors, document chunks
+
+## Data Management
+
+### Adding Employees
+Edit `mcp-servers/employee-context/employee-database.json`
+
+### Adding Vendors
+Edit `mcp-servers/vendor-context/vendor-database.json`
+
+### Adding Policy Documents
+Add markdown files to `mcp-servers/procurement-rag/procurement-docs/`
+- Use markdown headers for section-based chunking
+- Server automatically reloads on restart
+- Or call POST /reload endpoint
+
+## Production Deployment
+
+For production use:
+1. Deploy MCP server to cloud provider (Heroku, Railway, AWS, etc.)
+2. Update Vapi assistant configuration with production URL
+3. Set up monitoring and logging
+4. Configure rate limiting
+5. Add authentication for reload endpoint
+
+## Monitoring
+
+Check system health:
+```bash
+curl http://localhost:3001/health
 ```
 
-## Troubleshooting
-
-**"The application error: Cannot find module..."**
-- Run `npm install` again
-
-**"Call connects but I hear nothing"**
-- Check your ngrok/server is running
-- Verify the webhook URL in Twilio is correct
-- Check server logs for errors
-
-**"AI response is cut off"**
-- Increase `max_tokens` in the OpenAI call
-- The system prompt asks for brief responses (under 50 words)
-
-**"High latency / slow responses"**
-- Consider using `gpt-3.5-turbo` instead of `gpt-4`
-- Deploy server closer to Twilio's servers (US East)
-
-## Next Steps
-
-Want to make it more advanced? Try:
-- Add memory that persists across calls
-- Integrate with your CRM or database
-- Add call recording
-- Implement call transfers to humans
-- Add sentiment analysis
-- Create a scheduling system
-- Build multi-language support
+Reload data without restart:
+```bash
+curl -X POST http://localhost:3001/reload
+```
 
 ## Cost Considerations
 
-- **Twilio**: ~$0.01-0.02 per minute
-- **OpenAI GPT-4**: ~$0.03 per 1K tokens (roughly $0.05-0.15 per conversation turn)
-- **Total**: About $0.10-0.30 per minute of conversation
-
-Use GPT-3.5-turbo to reduce costs by ~90%!
+- **Vapi Platform**: Variable based on minutes used
+- **OpenAI GPT-4**: ~$0.03 per 1K tokens
+- **ngrok**: Free tier available, paid for custom domains
+- **Typical call**: ~$0.15-0.30 depending on length and function calls
 
 ## Security Notes
 
-- Never commit your `.env` file
+- `.env` file contains sensitive API keys - never commit to git
+- `.env.backup` is in `.gitignore` to prevent accidental commits
+- Use `.env.example` as template for sharing with team
 - Rotate API keys regularly
-- Add rate limiting for production
-- Validate Twilio requests (add signature validation)
-- Use HTTPS in production
+- Add request validation in production
+- Use HTTPS for all endpoints
+
+## Troubleshooting
+
+**Server won't start**
+- Check port 3001 is available: `lsof -i :3001`
+- Kill existing process: `lsof -ti:3001 | xargs kill -9`
+
+**Functions not working on calls**
+- Verify ngrok is running and URL is current
+- Check configure-complete-system.js was run with correct URL
+- Test endpoints directly: `curl -X POST http://localhost:3001/health`
+
+**Policy search returning no results**
+- Verify documents exist in `mcp-servers/procurement-rag/procurement-docs/`
+- Check document chunks loaded: `curl http://localhost:3001/health`
+- Try broader search terms
+
+**Vendor search not finding matches**
+- Check vendor database loaded: `curl http://localhost:3001/health`
+- Search uses keyword matching - try different terms
+- Verify vendor-database.json format is correct
+
+## Future Enhancements
+
+See `ARCHITECTURE.md` for detailed enhancement roadmap including:
+- JIRA integration for automatic ticket creation
+- Tract integration for vendor management
+- Budget validation API
+- Approval workflow automation
+- Multi-language support
+- Call analytics and insights
 
 ## Resources
 
-- [Twilio Voice Docs](https://www.twilio.com/docs/voice)
+- [Vapi Documentation](https://docs.vapi.ai)
 - [OpenAI API Docs](https://platform.openai.com/docs)
-- [TwiML Reference](https://www.twilio.com/docs/voice/twiml)
+- [Architecture Documentation](./ARCHITECTURE.md)
 
 ---
 
-Built with ❤️ using Twilio and OpenAI
+Built for Input Output's Procurement Team led by Andrea Jorgensen
