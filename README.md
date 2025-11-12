@@ -347,4 +347,4 @@ See `ARCHITECTURE.md` for detailed enhancement roadmap including:
 
 ---
 
-Built for Input Output's Procurement Team led by Andrea Jorgensen
+Built with Vapi and OpenAI
