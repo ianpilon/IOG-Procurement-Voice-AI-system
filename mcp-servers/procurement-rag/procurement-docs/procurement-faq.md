@@ -49,7 +49,7 @@
 ---
 
 ### Q: What if my request is urgent?
-**A**: Mark as "Urgent" in JIRA and email Andrea Jorgensen directly. Include:
+**A**: Mark as "Urgent" in JIRA and email Andrea Smith directly. Include:
 - Business justification for urgency
 - Consequences of delay
 - Requested timeline
@@ -215,7 +215,7 @@ For Time & Materials:
 **A**:
 1. Submit complete request (all fields filled)
 2. Mark as "Urgent" in JIRA
-3. Email Andrea Jorgensen with justification
+3. Email Andrea Smith with justification
 4. Use pre-approved vendor (faster than onboarding new one)
 5. Use standard contract template (avoid custom terms)
 
@@ -239,7 +239,7 @@ For Time & Materials:
 **A**: Steps:
 1. Document performance issues
 2. Communicate concerns to vendor
-3. Contact Andrea Jorgensen (procurement@iog.com)
+3. Contact Andrea Smith (procurement@iog.com)
 4. Procurement will work with you on resolution (cure period, termination, etc.)
 
 **Options**: Performance improvement plan, reduce scope, terminate contract
@@ -347,7 +347,7 @@ For Time & Materials:
 **A**:
 - Check JIRA ticket for updates
 - Email procurement@iog.com with ticket number
-- For urgent status: Call Andrea Jorgensen
+- For urgent status: Call Andrea Smith
 
 **Typical updates**: Request received → Under review → Approved/Returned → PO issued
 
@@ -360,7 +360,7 @@ For Time & Materials:
 **JIRA**: Procurement Requests project
 
 ### Procurement Team:
-- **Andrea Jorgensen** (Procurement Manager): andrea.jorgensen@iog.com - Escalations, expedited requests, policy questions
+- **Andrea Smith** (Procurement Manager): andrea.smith@iog.com - Escalations, expedited requests, policy questions
 - **Maria Santos** (Senior Procurement Specialist): maria.santos@iog.com - Vendor onboarding, contract questions
 - **James Chen** (Procurement Analyst): james.chen@iog.com - Vendor database, historical data, reporting
 

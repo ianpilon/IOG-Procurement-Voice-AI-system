@@ -168,7 +168,7 @@ async function configureCompleteSystem() {
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('  ✓ Employee Context Lookup');
     console.log('    - Endpoint:', `${NGROK_URL}/lookup-employee`);
-    console.log('    - Employees: Andrea Jorgensen & team');
+    console.log('    - Employees: Andrea Smith & team');
     console.log('');
     console.log('  ✓ Procurement Policy Search (RAG)');
     console.log('    - Endpoint:', `${NGROK_URL}/search-policies`);

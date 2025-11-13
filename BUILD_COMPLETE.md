@@ -1,7 +1,7 @@
 # Procurement Voice AI - BUILD COMPLETE ✅
 
 ## Summary
-Successfully built a voice AI assistant for Andrea Jorgensen's procurement team that prevents 50% of wasted time on incomplete requests and repetitive questions.
+Successfully built a voice AI assistant for Andrea Smith's procurement team that prevents 50% of wasted time on incomplete requests and repetitive questions.
 
 ## What Was Built
 
@@ -39,7 +39,7 @@ Successfully built a voice AI assistant for Andrea Jorgensen's procurement team 
 ### ✅ Phase 5: Testing
 All endpoints tested and working:
 - ✅ Health check: 5 employees, 12 vendors, 146 docs loaded
-- ✅ Employee lookup: Returns Andrea Jorgensen details
+- ✅ Employee lookup: Returns Andrea Smith details
 - ✅ Policy search: Returns vendor onboarding info
 - ✅ Vendor search: Finds 2 Rust engineering vendors
 - ✅ Request validation (complete): Confirms ready to submit
@@ -184,7 +184,7 @@ Employee DB   Vendor DB   Procurement    Validation
 
 **Server Location**: `/Users/ianpilon/Desktop/procurement-voice-bot`
 **Plan Document**: `/Users/ianpilon/Desktop/PROCUREMENT_VOICE_AI_PLAN.md`
-**Original Context**: `/Users/ianpilon/Desktop/Andrea Jorgensen - Opportunity Map.pdf`
+**Original Context**: `/Users/ianpilon/Desktop/Andrea Smith - Opportunity Map.pdf`
 
 ---
 

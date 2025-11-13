@@ -185,12 +185,12 @@ IOG maintains standard contract templates to streamline procurement and ensure c
 
 ### $25,000 - $50,000:
 - Standard template with minor modifications allowed
-- Procurement Manager (Andrea Jorgensen) approval required
+- Procurement Manager (Andrea Smith) approval required
 - Legal review if non-standard terms requested
 
 ### $50,000 - $100,000:
 - Legal review recommended
-- Andrea Jorgensen approval required
+- Andrea Smith approval required
 - CFO notification
 
 ### Over $100,000:
@@ -285,7 +285,7 @@ IOG maintains standard contract templates to streamline procurement and ensure c
 - Template selection questions: procurement@iog.com
 - Template modification requests: Maria Santos
 - Legal review needed: legal@iog.com
-- Urgent template needs: Andrea Jorgensen
+- Urgent template needs: Andrea Smith
 
 ---
 

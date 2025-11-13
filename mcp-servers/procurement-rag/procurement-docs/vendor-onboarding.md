@@ -47,7 +47,7 @@ All vendors must submit:
 
 ### Contracts $50K-$100K:
 - Requires legal review of terms
-- Andrea Jorgensen (Procurement Manager) approval needed
+- Andrea Smith (Procurement Manager) approval needed
 - Typical turnaround: 5-10 business days
 
 ### Contracts Over $100K:
@@ -90,7 +90,7 @@ Once all approvals are complete:
 
 ## Expedited Process
 For urgent needs (defined as <2 weeks to start date):
-- Contact Andrea Jorgensen immediately
+- Contact Andrea Smith immediately
 - Provide detailed business justification
 - May require executive approval
 - Some requirements may be processed in parallel
@@ -109,7 +109,7 @@ For urgent needs (defined as <2 weeks to start date):
 
 ## Contact Information
 - General onboarding questions: Maria Santos (maria.santos@iog.com)
-- Expedited requests: Andrea Jorgensen (andrea.jorgensen@iog.com)
+- Expedited requests: Andrea Smith (andrea.jorgensen@iog.com)
 - Legal review status: legal@iog.com
 - InfoSec questions: infosec@iog.com
 

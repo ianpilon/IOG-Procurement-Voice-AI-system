@@ -314,7 +314,7 @@ For projects >6 months:
 
 **General Payment Questions**: ap@iog.com  
 **Invoice Disputes**: ap@iog.com (cc: procurement@iog.com)  
-**Contract Payment Terms**: Andrea Jorgensen (andrea.jorgensen@iog.com)  
+**Contract Payment Terms**: Andrea Smith (andrea.smith@iog.com)  
 **PO Numbers**: procurement@iog.com  
 **International Payments**: ap@iog.com  
 **Tax Forms (W-9/W-8)**: ap@iog.com

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Procurement Voice AI is an intelligent voice assistant designed for Input Output's procurement team. It handles incoming phone calls from internal departments, validates procurement requests, provides self-service answers about vendors and policies, and dramatically reduces the manual administrative burden on Andrea Jorgensen's procurement team.
+The Procurement Voice AI is an intelligent voice assistant designed for Input Output's procurement team. It handles incoming phone calls from internal departments, validates procurement requests, provides self-service answers about vendors and policies, and dramatically reduces the manual administrative burden on Andrea Smith's procurement team.
 
 **Primary Goal**: Eliminate 50% of wasted time on incomplete requests and repetitive questions by validating requests and enabling self-service before routing to the human procurement team.
 
@@ -192,10 +192,10 @@ The Procurement Voice AI is an intelligent voice assistant designed for Input Ou
   "employees": [
     {
       "id": "emp001",
-      "name": "Andrea Jorgensen",
+      "name": "Andrea Smith",
       "firstName": "Andrea",
       "lastName": "Jorgensen",
-      "email": "andrea.jorgensen@iog.com",
+      "email": "andrea.smith@iog.com",
       "team": "Procurement",
       "department": "Procurement & Vendor Management",
       "title": "Procurement Manager",
@@ -562,7 +562,7 @@ Result: User got answer WITHOUT involving procurement team ✅
 ```
 Input: { name: "Andrea" }
 
-Output: "Employee found: Andrea Jorgensen, Procurement Manager in Procurement & 
+Output: "Employee found: Andrea Smith, Procurement Manager in Procurement & 
          Vendor Management. Team: Procurement. Focused on reducing manual admin 
          work. Prefers validated, complete requests only. Communication style: 
          Direct and efficient."
@@ -921,7 +921,7 @@ interface ValidationResult {
 {
   "results": [{
     "toolCallId": "call_abc123",
-    "result": "Employee found: Andrea Jorgensen, Procurement Manager..."
+    "result": "Employee found: Andrea Smith, Procurement Manager..."
   }]
 }
 ```
@@ -2043,7 +2043,7 @@ curl -X POST http://localhost:3001/reload
 
 **For Questions**:
 - Technical issues: [Tech support contact]
-- Business requirements: Andrea Jorgensen (andrea.jorgensen@iog.com)
+- Business requirements: Andrea Smith (andrea.smith@iog.com)
 - Vapi platform: https://docs.vapi.ai
 
 ---
